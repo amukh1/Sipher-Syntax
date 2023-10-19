@@ -8,13 +8,13 @@ program
 stat
     : ID '=' expr ';'
     | expr ';'
-    | DECL ID '(' idec (',' idec)* ')' ARROW ID ';'
+    | DECL ID '(' ((idec|DOTS) (',' (idec|DOTS))*)? ')' ARROW ID ';'
     | RETURN expr ';'
     ;
 
-type: ID ;
+type: (ID) ;
 idec: ID COL type ;
-def : DEF ID '(' idec (',' idec)* ')' ARROW ID '{' stat* '}' ;
+def : DEF ID '(' (idec (',' idec)*)? ')' ARROW ID '{' stat* '}' ;
 
 expr: ID
     | INT
@@ -28,7 +28,7 @@ expr: ID
     | expr SUB expr
     | expr ARROW '(' expr ')'
     | '(' expr ')'
-    |
+    | STRING
     
     ;
 
