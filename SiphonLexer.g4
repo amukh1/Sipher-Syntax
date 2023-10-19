@@ -1,0 +1,28 @@
+// DELETE THIS CONTENT IF YOU PUT COMBINED GRAMMAR IN Parser TAB
+lexer grammar ExprLexer;
+
+AND : '&&' ;
+OR : '||' ;
+NOT : '!' ;
+EQ : '=' ;
+PLUS: '+';
+SUB: '-';
+MULT: '*';
+DIV: '/';
+OPAREN: '(';
+CPAREN: ')';
+COMMA : ',' ;
+SEMI : ';' ;
+
+DEF: 'def';
+DECL: 'decl';
+ARROW: '->';
+COL: ':';
+RETURN: 'return';
+
+LCURLY : '{' ;
+RCURLY : '}' ;
+
+INT : [0-9]+ ; 
+ID: [a-zA-Z_][a-zA-Z_0-9]* ;
+WS: [ \t\n\r\f]+ -> skip ;
