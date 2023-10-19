@@ -12,7 +12,8 @@ stat
     | RETURN expr ';'
     ;
 
-type: (ID) ;
+rawtype: (ID);
+type: (ID) (STAR)*;
 idec: ID COL type ;
 def : DEF ID '(' (idec (',' idec)*)? ')' ARROW ID '{' stat* '}' ;
 
@@ -22,7 +23,7 @@ expr: ID
     | NOT expr
     | expr AND expr
     | expr OR expr
-    | expr MULT expr
+    | expr STAR expr
     | expr DIV expr
     | expr PLUS expr
     | expr SUB expr
