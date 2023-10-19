@@ -1,28 +1,35 @@
-// DELETE THIS CONTENT IF YOU PUT COMBINED GRAMMAR IN Parser TAB
-lexer grammar ExprLexer;
+parser grammar ExprParser;
+options { tokenVocab=ExprLexer;}
 
-AND : '&&' ;
-OR : '||' ;
-NOT : '!' ;
-EQ : '=' ;
-PLUS: '+';
-SUB: '-';
-MULT: '*';
-DIV: '/';
-OPAREN: '(';
-CPAREN: ')';
-COMMA : ',' ;
-SEMI : ';' ;
+program
+    : (stat | def)*  EOF
+    ;
 
-DEF: 'def';
-DECL: 'decl';
-ARROW: '->';
-COL: ':';
-RETURN: 'return';
+stat
+    : ID '=' expr ';'
+    | expr ';'
+    | DECL ID '(' ((idec|DOTS) (',' (idec|DOTS))*)? ')' ARROW ID ';'
+    | RETURN expr ';'
+    ;
 
-LCURLY : '{' ;
-RCURLY : '}' ;
+type: (ID) ;
+idec: ID COL type ;
+def : DEF ID '(' (idec (',' idec)*)? ')' ARROW ID '{' stat* '}' ;
 
-INT : [0-9]+ ; 
-ID: [a-zA-Z_][a-zA-Z_0-9]* ;
-WS: [ \t\n\r\f]+ -> skip ;
+expr: ID
+    | INT
+    | func
+    | NOT expr
+    | expr AND expr
+    | expr OR expr
+    | expr MULT expr
+    | expr DIV expr
+    | expr PLUS expr
+    | expr SUB expr
+    | expr ARROW '(' expr ')'
+    | '(' expr ')'
+    | STRING
+    
+    ;
+
+func :  ID '(' expr (',' expr)* ')' ;
